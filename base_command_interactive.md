@@ -24,3 +24,21 @@
 \help – справочник SQL
 \q (или Ctrl+D) – выход с программы
 ```
+#### Полезные команды
+```
+CREATE DATABASE db_name; - Создаем БД с названием db_name
+CREATE USER db_user WITH PASSWORD 'db_user_pw'; - Создаем пользователя db_user с паролем db_user_pw
+GRANT ALL PRIVILEGES ON DATABASE db_name to db_user; - Даем ВСЕ права пользователю db_user на базу db_name
+SELECT rolname FROM pg_roles; - Посмотреть все роли в базе.
+SELECT session_user; - Посмотреть текущего пользователя, под которым выполняется сеанс.
+
+SELECT * FROM pg_stat_activity WHERE state = 'active'; - Получить все выполняемые запросы на сервере.
+SELECT pg_cancel_backend(<pid of the process>); - kill неугодный процесс.
+SELECT pg_terminate_backend(<pid of the process>); - если процесс не может быть kill, то пробуем это. 
+
+SELECT pg_size_pretty(pg_database_size(current_database())); - получить красивый размер бд
+SELECT pg_relation_size('accounts'); - получить размер конкретной таблицы
+```
+```
+/usr/local/pgsql/data/postgresql.conf - Конфиг
+```
