@@ -50,3 +50,26 @@ pg_dump -a -t table_name -f file_name database_name
 ```
 pg_dump -h localhost -O -F p -c -U postgres mydb | gzip -c > mydb.gz
 ```
+
+#### Восстановление таблиц из резервных копий (бэкапов):
+```
+psql — восстановление бекапов, которые хранятся в обычном текстовом файле (plain text);
+pg_restore — восстановление сжатых бекапов (tar);
+```
+#### Восстановление всего бекапа с игнорированием ошибок
+```
+psql -h localhost -U someuser -d dbname -f mydb.sql
+```
+#### Восстановление всего бекапа с остановкой на первой ошибке
+```
+psql -h localhost -U someuser —set ON_ERROR_STOP=on -f mydb.sql
+```
+Для восстановления из tar-архива нам понадобиться сначала создать базу с помощью CREATE DATABASE mydb; (если при создании бекапа не была указана опция -C) и восстановить
+```
+pg_restore —dbname=mydb —jobs=4 —verbose mydb.backup
+```
+Восстановление резервной копии БД, сжатой gz
+```
+gunzip mydb.gz
+psql -U postgres -d mydb -f mydb
+```
